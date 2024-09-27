@@ -46,7 +46,7 @@ ConfigManager g_config;
 Monsters g_monsters;
 Vocations g_vocations;
 RSA g_RSA;
-
+std::string secretKey;
 std::mutex g_loaderLock;
 std::condition_variable g_loaderSignal;
 std::unique_lock<std::mutex> g_loaderUniqueLock(g_loaderLock);
