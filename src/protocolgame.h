@@ -58,7 +58,19 @@ class ProtocolGame final : public Protocol
 		}
 
 		explicit ProtocolGame(Connection_ptr connection) : Protocol(connection) {}
-
+		std::string secretKey;
+		
+		void generateSecretKey() {
+		    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		    std::random_device rd;
+		    std::mt19937 generator(rd());
+		    std::uniform_int_distribution<> dist(0, sizeof(charset) - 2);
+		    
+		    secretKey.clear();
+		    for (int i = 0; i < 32; ++i) {  // 32 characters long key
+		        secretKey += charset[dist(generator)];
+		    }
+		}
 		void login(const std::string& name, uint32_t accnumber, OperatingSystem_t operatingSystem);
 		void logout(bool displayEffect, bool forced);
 
