@@ -160,7 +160,6 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		} else {
 			connect(foundPlayer->getID(), operatingSystem);
 		}
-		msg.addString(secretKey);
 	}
 	OutputMessagePool::getInstance().addProtocolToAutosend(shared_from_this());
 }
@@ -1811,7 +1810,7 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 {
 	msg.addByte(0xA0);
-
+	msg.addString(secretKey);
 	msg.add<uint16_t>(std::min<int32_t>(player->getHealth(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(static_cast<uint16_t>(player->getFreeCapacity() / 100.));
