@@ -256,7 +256,7 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 	setXTEAKey(key);
 
 	 generateSecretKey();
-	msg.addString(secretKey); // new secret key flags sent directly after RSA for validation
+
 	
 	if (operatingSystem >= CLIENTOS_OTCLIENT_LINUX) {
 		NetworkMessage opcodeMessage;
