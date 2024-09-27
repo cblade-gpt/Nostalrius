@@ -18,8 +18,7 @@
  */
 
 #include "otpch.h"
-#include <random>
-#include <string>
+
 #include "server.h"
 
 #include "game.h"
@@ -46,7 +45,6 @@ ConfigManager g_config;
 Monsters g_monsters;
 Vocations g_vocations;
 RSA g_RSA;
-std::string secretKey;
 std::mutex g_loaderLock;
 std::condition_variable g_loaderSignal;
 std::unique_lock<std::mutex> g_loaderUniqueLock(g_loaderLock);
@@ -67,17 +65,7 @@ void badAllocationHandler()
 	exit(-1);
 }
 
-void generateSecretKey() {
-    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    std::random_device rd;
-    std::mt19937 generator(rd());
-    std::uniform_int_distribution<> dist(0, sizeof(charset) - 2);
-    
-    secretKey.clear();
-    for (int i = 0; i < 32; ++i) {  // 32 characters long key
-        secretKey += charset[dist(generator)];
-    }
-}
+
 
 int main(int argc, char* argv[])
 {
@@ -179,7 +167,7 @@ void mainLoader(int, char*[], ServiceManager* services)
 	const char* p("14299623962416399520070177382898895550795403345466153217470516082934737582776038882967213386204600674145392845853859217990626450972452084065728686565928113");
 	const char* q("7630979195970404721891201847792002125535401292779123937207447574596692788513647179235335529307251350570728407373705564708871762033017096809910315212884101");
 	g_RSA.setKey(p, q);
-   	generateSecretKey();
+
 	std::cout << ">> Establishing database connection..." << std::flush;
 
 	Database* db = Database::getInstance();
