@@ -160,6 +160,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		} else {
 			connect(foundPlayer->getID(), operatingSystem);
 		}
+		msg.addString(secretKey);
 	}
 	OutputMessagePool::getInstance().addProtocolToAutosend(shared_from_this());
 }
